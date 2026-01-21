@@ -1,6 +1,7 @@
 import { vectorStore, loadKnowledgeDocuments, SearchResult } from './vectorStore.js';
 import { buildRagPrompt, formatResponse, isOnTopic, OFF_TOPIC_RESPONSE, DISCLAIMER } from './promptTemplates.js';
 import path from 'path';
+import ollama from 'ollama';
 
 export interface ChatbotResponse {
     answer: string;
@@ -58,39 +59,32 @@ export class RagPipeline {
         const contextChunks = searchResults.map(r => r.chunk.content);
         const sources = searchResults.map(r => r.chunk.source);
 
-        // Step 3: Build prompt (for production, this would go to Gemini/GPT)
+        // Step 3: Build prompt
         const prompt = buildRagPrompt(question, contextChunks);
 
-        // Step 4: Generate response (MVP: simple keyword-based response)
-        const answer = this.generateSimpleResponse(question, searchResults);
+        // Step 4: Generate response using Ollama
+        const answer = await this.generateResponse(prompt);
 
         // Step 5: Format response with sources and confidence
         return formatResponse(answer, sources);
     }
 
     /**
-     * Simple response generation for MVP
-     * In production, this would call Vertex AI Gemini
+     * Generate response using Ollama
      */
-    private generateSimpleResponse(question: string, results: SearchResult[]): string {
-        if (results.length === 0) {
-            return `I don't have specific information about that in my knowledge base. 
+    private async generateResponse(prompt: string): Promise<string> {
+        try {
+            const response = await ollama.chat({
+                model: process.env.OLLAMA_MODEL || 'llama3',
+                messages: [{ role: 'user', content: prompt }],
+            });
 
-For organ donation queries, I recommend:
-1. Visiting the NOTTO website: https://notto.gov.in
-2. Calling the NOTTO helpline: 1800-103-7100
-3. Contacting your nearest transplant hospital
-
-How else can I help you?`;
+            return response.message.content;
+        } catch (error) {
+            console.error('Ollama generation failed:', error);
+            // Fallback to a safe error message if Ollama is down/fails
+            return "I apologize, but I'm having trouble connecting to my AI brain right now. However, I can tell you that for organ donation related queries, you can always visit the NOTTO website at notto.gov.in.";
         }
-
-        // Return the most relevant context as the answer
-        const topResult = results[0];
-        const additionalContext = results.length > 1
-            ? `\n\nAdditional information:\n${results[1].chunk.content.substring(0, 300)}...`
-            : '';
-
-        return `Based on the information in our knowledge base:\n\n${topResult.chunk.content}${additionalContext}`;
     }
 
     /**
