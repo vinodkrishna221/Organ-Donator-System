@@ -1,65 +1,124 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex min-h-screen flex-col">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-14 items-center">
+          <div className="mr-4 hidden md:flex">
+            <Link className="mr-6 flex items-center space-x-2" href="/">
+              <span className="hidden font-bold sm:inline-block">
+                Organ Donation Platform
+              </span>
+            </Link>
+            <nav className="flex items-center space-x-6 text-sm font-medium">
+              <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                href="#about"
+              >
+                About
+              </Link>
+              <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                href="#process"
+              >
+                Process
+              </Link>
+              <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                href="#contact"
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
+          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+            <div className="w-full flex-1 md:w-auto md:flex-none">
+
+            </div>
+            <nav className="flex items-center text-sm font-medium">
+              <Link href="/login">
+                <Button variant="ghost">Log in</Button>
+              </Link>
+              <Link href="/login">
+                <Button>Get Started</Button>
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <main className="flex-1">
+        <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
+          <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
+            <Link
+              href="/login"
+              className="rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <Badge variant="secondary">New</Badge> Digital Organ Donation Registry
+            </Link>
+            <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
+              Connect Hope, Share Life
+            </h1>
+            <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+              A centralized platform connecting donors, recipients, and hospitals to streamline the organ donation process and save lives.
+            </p>
+            <div className="space-x-4">
+              <Link href="/login">
+                <Button size="lg">Get Started</Button>
+              </Link>
+              <Link href="#learn-more">
+                <Button variant="outline" size="lg">Learn More</Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+        <section
+          id="stats"
+          className="container space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24"
+        >
+          <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
+            <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+              <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+                <div className="space-y-2">
+                  <h3 className="font-bold">Real-time Matching</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Instant automated matching based on medical compatibility.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+              <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+                <div className="space-y-2">
+                  <h3 className="font-bold">Transparent Process</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Complete tracking of donation status and transplant scheduling.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+              <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+                <div className="space-y-2">
+                  <h3 className="font-bold">Secure Data</h3>
+                  <p className="text-sm text-muted-foreground">
+                    HIPAA compliant security for all patient and donor information.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="py-6 md:px-8 md:py-0">
+        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
+            Built by <span className="font-medium underline underline-offset-4">Team Antigravity</span>.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </footer>
     </div>
   );
 }
