@@ -1,0 +1,21 @@
+{
+  "name": "organ-donation-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-powered organ donation and recipient matching platform",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "OrganDonation Team",
+  "license": "MIT"
+}
