@@ -74,8 +74,11 @@ export class RagPipeline {
      */
     private async generateResponse(prompt: string): Promise<string> {
         try {
+            const model = process.env.OLLAMA_MODEL || 'llama3';
+            console.log(`🤖 Chatbot using Ollama model: ${model}`);
+
             const response = await ollama.chat({
-                model: process.env.OLLAMA_MODEL || 'llama3',
+                model: model,
                 messages: [{ role: 'user', content: prompt }],
             });
 
