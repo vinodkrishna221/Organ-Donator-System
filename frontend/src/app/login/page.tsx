@@ -28,7 +28,7 @@ export default function LoginPage() {
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="role">Role</Label>
-                            <Select onValueChange={(val) => setSelectedRole(val as UserRole)}>
+                            <Select onValueChange={(val: string) => setSelectedRole(val as UserRole)}>
                                 <SelectTrigger id="role">
                                     <SelectValue placeholder="Select Role" />
                                 </SelectTrigger>
